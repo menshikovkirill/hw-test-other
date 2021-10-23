@@ -20,6 +20,7 @@ describe("static-screens", async () => {
     })
 });
 
+const wait = (time) => new Promise(res => setTimeout(res, time));
 describe('Корзина', async () => {
     it('в шапке рядом со ссылкой на корзину должно отображаться количество не повторяющихся товаров в ней', async function() {
         await this.browser.url('/hw/store/Catalog');
@@ -84,10 +85,11 @@ describe('Корзина', async () => {
     it('общая стоимость', async function()  {
         await this.browser.url('/hw/store/catalog');
         let details = await this.browser.$('.card-link');
-        await details.waitForExist();
+        await details.waitForExist({timeout: 2000});
         details.click();
+        wait(1000);
         let addCard = await this.browser.$('.ProductDetails-AddToCart');
-        addCard.waitForExist();
+        addCard.waitForExist({timeout: 2000});
 
         addCard.click();
         const nameElem1 = await this.browser.$('h1');
@@ -95,33 +97,36 @@ describe('Корзина', async () => {
 
         const priceElem1 = await this.browser.$('.ProductDetails-Price');
         let price1 = await priceElem1.getText();
-        price1 = price1.slice(1)
+        price1 = +price1.slice(1)
         console.log(price1);
 
         await this.browser.url('/hw/store/catalog');
         details = await this.browser.$('.row:nth-child(2) div~div .card-link');
-        await details.waitForExist();
+        await details.waitForExist({timeout: 2000});
 
         details.click();
-
+        await wait(1000);
         addCard = await this.browser.$('.ProductDetails-AddToCart');
-        addCard.waitForExist();
+        addCard.waitForExist({timeout: 2000});
 
         addCard.click();
         const nameElem2 = await this.browser.$('h1');
+        await nameElem2.waitForExist({timeout:2000});
         const name2 = await nameElem2.getText();
 
         const priceElem2 = await this.browser.$('.ProductDetails-Price');
+        await priceElem2.waitForExist({timeout:2000});
         let price2 = await priceElem2.getText();
-        price2 = price2.slice(1)
+        price2 = +price2.slice(1)
 
         await this.browser.url('/hw/store/cart');
         const totalPriceElem =  await this.browser.$('.Cart-OrderPrice');
+        await totalPriceElem.waitForExist({timeout:2000});
         let totalPrice = await totalPriceElem.getText();
 
-        totalPrice = totalPrice.slice(1);
+        totalPrice = +totalPrice.slice(1);
 
-       // assert.equal((+price1 + +price2), +totalPrice);
+        assert.equal((price1 + price2), totalPrice);
 
     });
 });
