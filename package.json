@@ -44,7 +44,6 @@
         "@types/webpack": "^5.28.0",
         "css-loader": "^6.3.0",
         "hermione": "^4.0.0-alpha.9",
-        "html-reporter": "^7.3.1",
         "html-webpack-plugin": "^5.3.2",
         "jest": "^27.3.0",
         "mini-css-extract-plugin": "^2.4.2",
