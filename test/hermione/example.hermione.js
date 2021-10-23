@@ -93,9 +93,11 @@ describe('Корзина', async () => {
 
         addCard.click();
         const nameElem1 = await this.browser.$('h1');
+        await nameElem1.waitForExist();
         const name1 = await nameElem1.getText();
 
         const priceElem1 = await this.browser.$('.ProductDetails-Price');
+        await priceElem1.waitForExist({timeout: 2000});
         let price1 = await priceElem1.getText();
         price1 = +price1.slice(1)
         console.log(price1);
@@ -118,6 +120,7 @@ describe('Корзина', async () => {
         await priceElem2.waitForExist({timeout:2000});
         let price2 = await priceElem2.getText();
         price2 = +price2.slice(1)
+        console.log(price2);
 
         await this.browser.url('/hw/store/cart');
         const totalPriceElem =  await this.browser.$('.Cart-OrderPrice');
@@ -127,6 +130,46 @@ describe('Корзина', async () => {
         totalPrice = +totalPrice.slice(1);
 
         assert.equal((price1 + price2), totalPrice);
+
+    });
+    it("оформление заказа", async function() {
+      // await this.browser.url('/hw/store/cart');
+
+        let inputNameElem = await this.browser.$('input');
+        await inputNameElem.waitForExist({timeout:2000});
+        inputNameElem.click();
+        inputNameElem.keys(["rk"]);
+
+        // wait(500);
+
+        let inputNameElem1 = await this.browser.$('.mb-3:nth-child(2) input');
+        await inputNameElem1.waitForExist({timeout:2000});
+        inputNameElem1.click();
+        inputNameElem1.keys(["89777465861"]);
+
+        // wait(500);
+
+        let inputNameElem2 = await this.browser.$('.mb-3:nth-child(3) textarea');
+        await inputNameElem2.waitForExist({timeout:2000});
+        inputNameElem2.click();
+        wait(500);
+        inputNameElem2.keys(["fefefefef"]);
+        inputNameElem2.keys(["fefefefef"]);
+        inputNameElem2.keys(["fefefefef"]);
+
+        // wait(500);
+
+        let inputNameElem3 = await this.browser.$('.Form-Submit');
+        await inputNameElem3.waitForExist({timeout:2000});
+        inputNameElem3.click();
+        inputNameElem3.click();
+        inputNameElem3.click();
+
+        wait(500);
+
+        const welcom = await this.browser.$('.alert-heading');
+        await welcom.waitForExist();
+        assert.equal(await welcom.getText(), 'Well done!');
 
     });
 });
