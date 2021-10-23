@@ -77,6 +77,9 @@ describe('Корзина', async () => {
         let emptyText = await emptyTextElem.getText();
 
         assert.equal(emptyText, 'catalog');
+
+        let href = await emptyTextElem.getAttribute("href");
+        assert.equal(href, '/hw/store/catalog');
     })
     it('общая стоимость', async function()  {
         // await this.browser.url('/hw/store/cart');
