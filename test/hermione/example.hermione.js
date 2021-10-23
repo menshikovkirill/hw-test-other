@@ -1,6 +1,6 @@
 const { assert } = require('chai');
 
-describe.skip("static-screens", async () => {
+describe("static-screens", async () => {
     it('main', async function() {
         await this.browser.url('/hw/store/');
         
@@ -13,6 +13,8 @@ describe.skip("static-screens", async () => {
     })
     it('Contacts', async function() {
         await this.browser.url('/hw/store/Contacts');
+
+        this.browser.windowSize="500x1000";
         
         await this.browser.assertView('Contacts', '#root');
     })
@@ -60,5 +62,68 @@ describe('Корзина', async () => {
         const count = await countElem.getText();
 
         assert.equal(count, "3");
+
+
     })
+    it('удаление корзины', async function() {
+        await this.browser.url('/hw/store/cart');
+
+        const buttonElem = await this.browser.$('.Cart-Clear');
+        await buttonElem.waitForExist();
+        buttonElem.click();
+
+        const emptyTextElem = await this.browser.$('.col a');
+        await emptyTextElem.waitForExist();
+        let emptyText = await emptyTextElem.getText();
+
+        assert.equal(emptyText, 'catalog');
+    })
+    it('общая стоимость', async function()  {
+        // await this.browser.url('/hw/store/cart');
+        // let totalPriceElem = await this.browser.$('.Cart-OrderPrice');
+        // await totalPriceElem.waitForExist();
+        // let totalPrice = await totalPriceElem.getText();
+        // assert.ok(totalPrice, "$906")
+        await this.browser.url('/hw/store/catalog');
+        let details = await this.browser.$('.card-link');
+        await details.waitForExist();
+        details.click();
+        let addCard = await this.browser.$('.ProductDetails-AddToCart');
+        addCard.waitForExist();
+
+        addCard.click();
+        const nameElem1 = await this.browser.$('h1');
+        const name1 = await nameElem1.getText();
+
+        const priceElem1 = await this.browser.$('.ProductDetails-Price');
+        let price1 = await priceElem1.getText();
+        price1 = price1.slice(1)
+        console.log(price1);
+
+        await this.browser.url('/hw/store/catalog');
+        details = await this.browser.$('.row:nth-child(2) div~div .card-link');
+        await details.waitForExist();
+
+        details.click();
+
+        addCard = await this.browser.$('.ProductDetails-AddToCart');
+        addCard.waitForExist();
+
+        addCard.click();
+        const nameElem2 = await this.browser.$('h1');
+        const name2 = await nameElem2.getText();
+
+        const priceElem2 = await this.browser.$('.ProductDetails-Price');
+        let price2 = await priceElem2.getText();
+        price2 = price2.slice(1)
+
+        await this.browser.url('/hw/store/cart');
+        const totalPriceElem =  await this.browser.$('.Cart-OrderPrice');
+        let totalPrice = await totalPriceElem.getText();
+
+        totalPrice = totalPrice.slice(1);
+
+        assert.equal((+price1 + +price2), +totalPrice);
+
+    });
 });

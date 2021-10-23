@@ -20,7 +20,7 @@ const api = new ExampleApi(basename);
 const cart = new CartApi();
 const store = initStore(api, cart);
 
-describe.skip("Router", () => {
+describe("Router", () => {
     const application = (
         <BrowserRouter basename={basename}>
             <Provider store={store}>
@@ -58,7 +58,7 @@ describe.skip("Router", () => {
     });
 });
 
-describe.skip('Общие требования', () => {
+describe('Общие требования', () => {
     const application = (
         <BrowserRouter basename={basename}>
             <Provider store={store}>
@@ -75,26 +75,26 @@ describe.skip('Общие требования', () => {
     });
 });
 
-describe('Каталог', () => {
-    it('в каталоге должны отображаться товары, список которых приходит с сервера', async ()  => {
-        const exampleStore = new ExampleStore();
-        const itemList = exampleStore.getAllProducts();
+// describe('Каталог', () => {
+//     it('в каталоге должны отображаться товары, список которых приходит с сервера', async ()  => {
+//         const exampleStore = new ExampleStore();
+//         const itemList = exampleStore.getAllProducts();
 
-        const catalog = (
-            <BrowserRouter basename={basename}>
-                <Provider store={store}>
-                    <Application />
-                </Provider>
-            </BrowserRouter>
-        );
+//         const catalog = (
+//             <BrowserRouter basename={basename}>
+//                 <Provider store={store}>
+//                     <Application />
+//                 </Provider>
+//             </BrowserRouter>
+//         );
       
-        const {container, getByTestId} = render(catalog);
-        const linkToCatalog = container.querySelector(".navbar-nav a");
-        events.click(linkToCatalog)
-        events.click(container.querySelector("h1"))
+//         const {container, getByTestId} = render(catalog);
+//         const linkToCatalog = container.querySelector(".navbar-nav a");
+//         events.click(linkToCatalog)
+//         events.click(container.querySelector("h1"))
 
         
-        console.log(container.outerHTML)
+//         console.log(container.outerHTML)
        
-    }, 3000)
-});
+//     }, 3000)
+// });
