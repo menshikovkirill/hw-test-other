@@ -20,7 +20,7 @@ const api = new ExampleApi(basename);
 const cart = new CartApi();
 const store = initStore(api, cart);
 
-describe("Router", () => {
+describe.skip("Router", () => {
     const application = (
         <BrowserRouter basename={basename}>
             <Provider store={store}>
@@ -58,7 +58,7 @@ describe("Router", () => {
     });
 });
 
-describe('Общие требования', () => {
+describe.skip('Общие требования', () => {
     const application = (
         <BrowserRouter basename={basename}>
             <Provider store={store}>
@@ -76,23 +76,25 @@ describe('Общие требования', () => {
 });
 
 describe('Каталог', () => {
-    it('в каталоге должны отображаться товары, список которых приходит с сервера', () => {
+    it('в каталоге должны отображаться товары, список которых приходит с сервера', async ()  => {
         const exampleStore = new ExampleStore();
         const itemList = exampleStore.getAllProducts();
 
-        const exApi = new ExampleApi('/hw/store');
-        const carApi = new CartApi();
-        const loadedStore = initStore(exApi, carApi);
-        loadedStore.dispatch(productsLoaded(itemList));
-        const catalog1 = (
+        const catalog = (
             <BrowserRouter basename={basename}>
-                <Provider store={loadedStore}>
-                    <Catalog />
+                <Provider store={store}>
+                    <Application />
                 </Provider>
             </BrowserRouter>
         );
+      
+        const {container, getByTestId} = render(catalog);
+        const linkToCatalog = container.querySelector(".navbar-nav a");
+        events.click(linkToCatalog)
+        events.click(container.querySelector("h1"))
 
-        const {container, getByTestId} = render(catalog1);
+        
         console.log(container.outerHTML)
-    })
+       
+    }, 3000)
 });
