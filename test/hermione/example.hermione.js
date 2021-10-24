@@ -102,11 +102,11 @@ describe('Корзина', async () => {
     it('общая стоимость', async function()  {
         await this.browser.url('/hw/store/catalog');
         let details = await this.browser.$('.card-link');
-        await details.waitForExist({timeout: 2000});
+        await details.waitForClickable({timeout: 2000});
         details.click();
         wait(1000);
         let addCard = await this.browser.$('.ProductDetails-AddToCart');
-        addCard.waitForExist({timeout: 2000});
+        addCard.waitForClickable({timeout: 2000});
 
         addCard.click();
         const nameElem1 = await this.browser.$('h1');
@@ -121,12 +121,12 @@ describe('Корзина', async () => {
 
         await this.browser.url('/hw/store/catalog');
         details = await this.browser.$('.row:nth-child(2) div~div .card-link');
-        await details.waitForExist({timeout: 2000});
+        await details.waitForClickable({timeout: 2000});
 
         details.click();
         await wait(1000);
         addCard = await this.browser.$('.ProductDetails-AddToCart');
-        addCard.waitForExist({timeout: 2000});
+        addCard.waitForClickable({timeout: 2000});
 
         addCard.click();
         const nameElem2 = await this.browser.$('h1');
