@@ -31,6 +31,7 @@ describe("static-screens", async () => {
         const button = await this.browser.$('button.Application-Toggler');
         await button.waitForClickable();
         await button.click();
+        await this.browser.$('.container').scrollIntoView();
         wait(1000);
         await this.browser.assertView('contacts-mini-click', '.container');
     });
@@ -86,7 +87,7 @@ describe('Корзина', async () => {
     })
     it('удаление корзины', async function() {
         const buttonElem = await this.browser.$('.Cart-Clear');
-        await buttonElem.waitForExist();
+        await buttonElem.waitForClickable();
         buttonElem.click();
 
         const emptyTextElem = await this.browser.$('.col a');
