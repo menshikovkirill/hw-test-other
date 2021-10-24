@@ -45,18 +45,18 @@ describe('Корзина', async () => {
         const details = await this.browser.$('.ProductItem-DetailsLink');
         await details.waitForExist();
 
-        details.click();
+        await details.click();
 
         let textAddItem = await this.browser.$('.text-success');
         const isEx = await textAddItem.isExisting()
         assert.ok(!isEx, "Нет слов Item in cart befor adding")
 
         const addCard = await this.browser.$('.ProductDetails-AddToCart');
-        addCard.waitForExist();
+        await addCard.waitForExist();
 
-        addCard.click();
-        addCard.click();
-        addCard.click();
+        await addCard.click();
+        await addCard.click();
+        await addCard.click();
 
         let addItem = await this.browser.$('.text-success');
         text = await addItem.getText();
@@ -96,7 +96,7 @@ describe('Корзина', async () => {
     it('удаление корзины', async function() {
         const buttonElem = await this.browser.$('.Cart-Clear');
         await buttonElem.waitForClickable();
-        buttonElem.click();
+        await buttonElem.click();
 
         const emptyTextElem = await this.browser.$('.col a');
         await emptyTextElem.waitForExist();
@@ -115,7 +115,7 @@ describe('Корзина', async () => {
         let addCard = await this.browser.$('.ProductDetails-AddToCart');
         await addCard.waitForClickable({timeout: 2000});
 
-        addCard.click();
+        await addCard.click();
         const nameElem1 = await this.browser.$('h1');
         await nameElem1.waitForExist();
         const name1 = await nameElem1.getText();
@@ -130,11 +130,11 @@ describe('Корзина', async () => {
         details = await this.browser.$('.row:nth-child(2) div~div .card-link');
         await details.waitForClickable({timeout: 2000});
 
-        details.click();
+        await details.click();
         addCard = await this.browser.$('.ProductDetails-AddToCart');
         await addCard.waitForClickable({timeout: 2000});
 
-        addCard.click();
+        await addCard.click();
         const nameElem2 = await this.browser.$('h1');
         await nameElem2.waitForExist({timeout:2000});
         const name2 = await nameElem2.getText();
@@ -159,11 +159,11 @@ describe('Корзина', async () => {
         await this.browser.url('/hw/store/catalog');
         let details = await this.browser.$('.card-link');
         await details.waitForClickable({timeout: 2000});
-        details.click();
+        await details.click();
         let addCard = await this.browser.$('.ProductDetails-AddToCart');
         await addCard.waitForClickable({timeout: 2000});
 
-        addCard.click();
+        await addCard.click();
         await this.browser.url('/hw/store/cart');
 
         let inputNameElem = await this.browser.$('input');
@@ -191,14 +191,10 @@ describe('Корзина', async () => {
         const element = await this.browser.$('.Form-Submit');
         await element.scrollIntoView();
         await this.browser.waitUntil(() => element.isClickable(), 1000);
-        element.click();
+        await element.click();
 
         const welcom = await this.browser.$('.alert-heading');
         await welcom.waitForExist({timeout:2000});
         assert.equal(await welcom.getText(), 'Well done!');
-
     });
-    it('перезагрузка', async function() {
-
-    })
 });
