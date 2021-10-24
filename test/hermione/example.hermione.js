@@ -111,7 +111,7 @@ describe('Корзина', async () => {
         await this.browser.url('/hw/store/catalog');
         let details = await this.browser.$('.card-link');
         await details.waitForClickable({timeout: 2000});
-        details.click();
+        await details.click();
         let addCard = await this.browser.$('.ProductDetails-AddToCart');
         await addCard.waitForClickable({timeout: 2000});
 
@@ -182,7 +182,7 @@ describe('Корзина', async () => {
 
         let inputNameElem2 = await this.browser.$('.mb-3:nth-child(3) textarea');
         await inputNameElem2.waitForExist({timeout:2000});
-        inputNameElem2.click();
+        await inputNameElem2.click();
      //   await wait500);
         await inputNameElem2.keys(["fefefefef"]);
         await inputNameElem2.keys(["fefefefef"]);
