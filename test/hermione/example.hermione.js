@@ -32,7 +32,7 @@ describe("static-screens", async () => {
         await button.waitForClickable();
         await button.click();
         await this.browser.$('.container').scrollIntoView();
-        wait(1000);
+        await wait(1000)
         await this.browser.assertView('contacts-mini-click', '.container');
     });
   
@@ -70,6 +70,10 @@ describe('Корзина', async () => {
         const nameElem = await this.browser.$('h1');
         const name = await nameElem.getText();
 
+        await this.browser.url('/hw/store/Catalog');
+        text = await this.browser.$('.ProductItem').$('.text-success');
+        await text.waitForExist();
+        assert.equal(await text.getText(), "Item in cart")
 
         await this.browser.url('/hw/store/Cart');
 
@@ -104,7 +108,7 @@ describe('Корзина', async () => {
         let details = await this.browser.$('.card-link');
         await details.waitForClickable({timeout: 2000});
         details.click();
-        wait(1000);
+        await wait(1000);
         let addCard = await this.browser.$('.ProductDetails-AddToCart');
         addCard.waitForClickable({timeout: 2000});
 
@@ -124,7 +128,7 @@ describe('Корзина', async () => {
         await details.waitForClickable({timeout: 2000});
 
         details.click();
-        await wait(1000);
+        await await wait(1000);
         addCard = await this.browser.$('.ProductDetails-AddToCart');
         addCard.waitForClickable({timeout: 2000});
 
@@ -156,19 +160,19 @@ describe('Корзина', async () => {
         await inputNameElem.click();
         await inputNameElem.keys(["rk"]);
 
-        wait(500);
+        await wait(500);
 
         let inputNameElem1 = await this.browser.$('.mb-3:nth-child(2) input');
         await inputNameElem1.waitForExist({timeout:2000});
         await inputNameElem1.click();
         await inputNameElem1.keys(["89777465861"]);
 
-     //   wait(500);
+     //   await wait500);
 
         let inputNameElem2 = await this.browser.$('.mb-3:nth-child(3) textarea');
         await inputNameElem2.waitForExist({timeout:2000});
         inputNameElem2.click();
-     //   wait(500);
+     //   await wait500);
         await inputNameElem2.keys(["fefefefef"]);
         await inputNameElem2.keys(["fefefefef"]);
         await inputNameElem2.keys(["fefefefef"]);
