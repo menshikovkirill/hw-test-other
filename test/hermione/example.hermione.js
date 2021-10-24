@@ -3,26 +3,44 @@ const { assert } = require('chai');
 describe("static-screens", async () => {
     it('main', async function() {
         await this.browser.url('/hw/store/');
-        
         await this.browser.assertView('main', '#root');
     })
     it('delivery', async function() {
         await this.browser.url('/hw/store/delivery');
-        
         await this.browser.assertView('delivery', '#root');
     })
     it('Contacts', async function() {
         await this.browser.url('/hw/store/Contacts');
-
-        this.browser.windowSize="500x1000";
-        
         await this.browser.assertView('Contacts', '#root');
     })
+
+    it("mini-delivery", async function() {
+        await this.browser.setWindowSize(500, 1024);
+        await this.browser.url('/hw/store/delivery');
+        await this.browser.assertView('delivery-mini', '#root');
+    });
+    it("mini-Contacts", async function() {
+        await this.browser.setWindowSize(500, 1024);
+        await this.browser.url('/hw/store/Contacts');
+        await this.browser.assertView('contacts-mini', '#root');
+    });
+
+    it("mini-Contacts-click", async function() {
+        await this.browser.setWindowSize(500, 1024);
+        await this.browser.url('/hw/store/Contacts');
+        const button = await this.browser.$('button.Application-Toggler');
+        await button.waitForClickable();
+        await button.click();
+        wait(1000);
+        await this.browser.assertView('contacts-mini-click', '.container');
+    });
+  
 });
 
 const wait = (time) => new Promise(res => setTimeout(res, time));
 describe('Корзина', async () => {
     it('в шапке рядом со ссылкой на корзину должно отображаться количество не повторяющихся товаров в ней', async function() {
+       await this.browser.setWindowSize(1300, 1024);
         await this.browser.url('/hw/store/Catalog');
         const details = await this.browser.$('.ProductItem-DetailsLink');
         await details.waitForExist();
