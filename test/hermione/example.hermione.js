@@ -32,7 +32,6 @@ describe("static-screens", async () => {
         await button.waitForClickable();
         await button.click();
         await this.browser.$('.container').scrollIntoView();
-        await wait(1000)
         await this.browser.assertView('contacts-mini-click', '.container');
     });
   
@@ -108,7 +107,6 @@ describe('Корзина', async () => {
         let details = await this.browser.$('.card-link');
         await details.waitForClickable({timeout: 2000});
         details.click();
-        await wait(1000);
         let addCard = await this.browser.$('.ProductDetails-AddToCart');
         addCard.waitForClickable({timeout: 2000});
 
@@ -128,7 +126,6 @@ describe('Корзина', async () => {
         await details.waitForClickable({timeout: 2000});
 
         details.click();
-        await await wait(1000);
         addCard = await this.browser.$('.ProductDetails-AddToCart');
         addCard.waitForClickable({timeout: 2000});
 
@@ -160,7 +157,7 @@ describe('Корзина', async () => {
         await inputNameElem.click();
         await inputNameElem.keys(["rk"]);
 
-        await wait(500);
+     
 
         let inputNameElem1 = await this.browser.$('.mb-3:nth-child(2) input');
         await inputNameElem1.waitForExist({timeout:2000});
