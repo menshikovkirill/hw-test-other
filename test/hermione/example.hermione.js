@@ -130,42 +130,38 @@ describe('Корзина', async () => {
         assert.equal((price1 + price2), totalPrice);
 
     });
-    // it("оформление заказа", async function() {
+    it("оформление заказа", async function() {
 
-    //     let inputNameElem = await this.browser.$('input');
-    //     await inputNameElem.waitForExist({timeout:2000});
-    //     await inputNameElem.click();
-    //     await inputNameElem.keys(["rk"]);
+        let inputNameElem = await this.browser.$('input');
+        await inputNameElem.waitForExist({timeout:2000});
+        await inputNameElem.click();
+        await inputNameElem.keys(["rk"]);
 
-    //     wait(500);
+        wait(500);
 
-    //     let inputNameElem1 = await this.browser.$('.mb-3:nth-child(2) input');
-    //     await inputNameElem1.waitForExist({timeout:2000});
-    //     await inputNameElem1.click();
-    //     await inputNameElem1.keys(["89777465861"]);
+        let inputNameElem1 = await this.browser.$('.mb-3:nth-child(2) input');
+        await inputNameElem1.waitForExist({timeout:2000});
+        await inputNameElem1.click();
+        await inputNameElem1.keys(["89777465861"]);
 
-    //  //   wait(500);
+     //   wait(500);
 
-    //     let inputNameElem2 = await this.browser.$('.mb-3:nth-child(3) textarea');
-    //     await inputNameElem2.waitForExist({timeout:2000});
-    //     inputNameElem2.click();
-    //  //   wait(500);
-    //     await inputNameElem2.keys(["fefefefef"]);
-    //     await inputNameElem2.keys(["fefefefef"]);
-    //     await inputNameElem2.keys(["fefefefef"]);
+        let inputNameElem2 = await this.browser.$('.mb-3:nth-child(3) textarea');
+        await inputNameElem2.waitForExist({timeout:2000});
+        inputNameElem2.click();
+     //   wait(500);
+        await inputNameElem2.keys(["fefefefef"]);
+        await inputNameElem2.keys(["fefefefef"]);
+        await inputNameElem2.keys(["fefefefef"]);
 
-    //    // wait(500);
+        const element = await this.browser.$('.Form-Submit');
+        await element.scrollIntoView();
+        await this.browser.waitUntil(() => element.isClickable(), 1000);
+        element.click();
 
-    //     let inputNameElem3 = await this.browser.$('.Form-Submit');
-    //     await inputNameElem3.waitForExist({timeout:2000});
-    //     wait(500);
-    //     await inputNameElem3.click();
-    //     wait(500);
-    //     await inputNameElem3.click();
+        const welcom = await this.browser.$('.alert-heading');
+        await welcom.waitForExist({timeout:2000});
+        assert.equal(await welcom.getText(), 'Well done!');
 
-    //     const welcom = await this.browser.$('.alert-heading');
-    //     await welcom.waitForExist({timeout:2000});
-    //     assert.equal(await welcom.getText(), 'Well done!');
-
-    // });
+    });
 });
