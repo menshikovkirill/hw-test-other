@@ -42,44 +42,45 @@ describe("static-screens", async () => {
 
 const wait = (time) => new Promise(res => setTimeout(res, time));
 describe('Корзина', async () => {
-    it('в шапке рядом со ссылкой на корзину должно отображаться количество не повторяющихся товаров в ней', async function() {
+    it('нет слов Item in cart', async function() {
         await this.browser.setWindowSize(1300, 1024);
         await this.browser.url('/hw/store/Catalog');
         const details = await this.browser.$('.ProductItem-DetailsLink');
-        await details.waitForExist();
-
+        await details.waitForClickable();
         await details.click();
-
-        let textAddItem = await this.browser.$('.text-success');
-        const isEx = await textAddItem.isExisting()
-        assert.ok(!isEx, "Нет слов Item in cart befor adding")
 
         const addCard = await this.browser.$('.ProductDetails-AddToCart');
         await addCard.waitForExist();
+        await addCard.waitForClickable();
 
         await addCard.click();
         await addCard.click();
         await addCard.click();
 
-        let addItem = await this.browser.$('.text-success');
-        text = await addItem.getText();
-        assert.equal(text, "Item in cart");
-
+        let textAddItem = await this.browser.$('.text-success');
+        const isEx = await textAddItem.isExisting()
+        assert.ok(isEx, "Нет слов Item in cart befor adding")
+    })
+    it('в шапке рядом со ссылкой на корзину должно отображаться количество не повторяющихся товаров в ней', async function(){
         let cartLink = await this.browser.$('.nav-link:last-child');
         text = await cartLink.getText();
         assert.equal(text, "Cart (1)");
-
-        const nameElem = await this.browser.$('h1');
-        const name = await nameElem.getText();
-
+    })
+    it('Item in cart в Catalog', async function() {
         await this.browser.url('/hw/store/Catalog');
-        text = await this.browser.$('.ProductItem').$('.text-success');
+        let text = await this.browser.$('.ProductItem').$('.text-success');
         await text.waitForExist();
         assert.equal(await text.getText(), "Item in cart")
+    })
+    it('данные при добавлении совпадают с корзиной', async function() {
+        const nameElem = await this.browser.$('.ProductItem-Name');
+        await nameElem.waitForExist();
+        const name = await nameElem.getText();
 
         await this.browser.url('/hw/store/Cart');
 
         const nameInTableElem = await this.browser.$('.Cart-Name');
+        await nameInTableElem.waitForExist();
         const nameInTable = await nameInTableElem.getText();
 
         assert.equal(nameInTable, name);
@@ -88,13 +89,15 @@ describe('Корзина', async () => {
         const count = await countElem.getText();
 
         assert.equal(count, "3");
-
+    })
+    it('при перезагрузке корзина не падает', async function() {
         await this.browser.refresh();
         await wait(500);
         const countElem1 = await this.browser.$('.Cart-Count');
-        const count1 = await countElem.getText();
+        const count1 = await countElem1.getText();
         assert.equal(count1, "3");
-
+    })
+    it('удаление корзины', async function() {
         const buttonElem = await this.browser.$('.Cart-Clear');
         await buttonElem.waitForClickable();
         await buttonElem.click();
@@ -107,7 +110,6 @@ describe('Корзина', async () => {
 
         let href = await emptyTextElem.getAttribute("href");
         assert.equal(href, '/hw/store/catalog');
-
     })
     it('общая стоимость', async function()  {
         await this.browser.url('/hw/store/catalog');
