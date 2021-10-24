@@ -28,11 +28,14 @@ describe("static-screens", async () => {
     it("mini-Contacts-click", async function() {
         await this.browser.setWindowSize(500, 1024);
         await this.browser.url('/hw/store/Contacts');
+        await this.browser.$('.container').scrollIntoView();
         const button = await this.browser.$('button.Application-Toggler');
         await button.waitForClickable();
         await button.click();
+        await(500);
         await this.browser.$('.container').scrollIntoView();
-        await this.browser.assertView('contacts-mini-click', '.container');
+        await(500);
+        await this.browser.assertView('contacts-mini-click', '#root');
     });
   
 });
@@ -92,8 +95,6 @@ describe('Корзина', async () => {
         const count1 = await countElem.getText();
         assert.equal(count1, "3");
 
-    })
-    it('удаление корзины', async function() {
         const buttonElem = await this.browser.$('.Cart-Clear');
         await buttonElem.waitForClickable();
         await buttonElem.click();
@@ -106,6 +107,7 @@ describe('Корзина', async () => {
 
         let href = await emptyTextElem.getAttribute("href");
         assert.equal(href, '/hw/store/catalog');
+
     })
     it('общая стоимость', async function()  {
         await this.browser.url('/hw/store/catalog');
