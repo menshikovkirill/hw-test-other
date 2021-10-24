@@ -40,7 +40,7 @@ describe("static-screens", async () => {
 const wait = (time) => new Promise(res => setTimeout(res, time));
 describe('Корзина', async () => {
     it('в шапке рядом со ссылкой на корзину должно отображаться количество не повторяющихся товаров в ней', async function() {
-       await this.browser.setWindowSize(1300, 1024);
+        await this.browser.setWindowSize(1300, 1024);
         await this.browser.url('/hw/store/Catalog');
         const details = await this.browser.$('.ProductItem-DetailsLink');
         await details.waitForExist();
@@ -86,6 +86,11 @@ describe('Корзина', async () => {
 
         assert.equal(count, "3");
 
+        await this.browser.refresh();
+        await wait(500);
+        const countElem1 = await this.browser.$('.Cart-Count');
+        const count1 = await countElem.getText();
+        assert.equal(count1, "3");
 
     })
     it('удаление корзины', async function() {
@@ -108,7 +113,7 @@ describe('Корзина', async () => {
         await details.waitForClickable({timeout: 2000});
         details.click();
         let addCard = await this.browser.$('.ProductDetails-AddToCart');
-        addCard.waitForClickable({timeout: 2000});
+        await addCard.waitForClickable({timeout: 2000});
 
         addCard.click();
         const nameElem1 = await this.browser.$('h1');
@@ -127,7 +132,7 @@ describe('Корзина', async () => {
 
         details.click();
         addCard = await this.browser.$('.ProductDetails-AddToCart');
-        addCard.waitForClickable({timeout: 2000});
+        await addCard.waitForClickable({timeout: 2000});
 
         addCard.click();
         const nameElem2 = await this.browser.$('h1');
@@ -151,6 +156,15 @@ describe('Корзина', async () => {
 
     });
     it("оформление заказа", async function() {
+        await this.browser.url('/hw/store/catalog');
+        let details = await this.browser.$('.card-link');
+        await details.waitForClickable({timeout: 2000});
+        details.click();
+        let addCard = await this.browser.$('.ProductDetails-AddToCart');
+        await addCard.waitForClickable({timeout: 2000});
+
+        addCard.click();
+        await this.browser.url('/hw/store/cart');
 
         let inputNameElem = await this.browser.$('input');
         await inputNameElem.waitForExist({timeout:2000});
@@ -184,4 +198,7 @@ describe('Корзина', async () => {
         assert.equal(await welcom.getText(), 'Well done!');
 
     });
+    it('перезагрузка', async function() {
+
+    })
 });
