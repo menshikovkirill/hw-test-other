@@ -10,14 +10,20 @@ describe("static-screens-test", () => {
     it('main-test', async function() {
         await this.browser.url('/hw/store/');
         await this.browser.assertView('main', '#root');
+        await this.browser.refresh();
+        await this.browser.assertView('main-ref', '#root');
     })
     it('delivery-test', async function() {
         await this.browser.url('/hw/store/delivery');
         await this.browser.assertView('delivery', '#root');
+        await this.browser.refresh();
+        await this.browser.assertView('delivery-ref', '#root');
     })
     it('Contacts-test', async function() {
         await this.browser.url('/hw/store/Contacts');
         await this.browser.assertView('Contacts', '#root');
+        await this.browser.refresh();
+        await this.browser.assertView('Contacts-ref', '#root');
     })
 
     it("mini-delivery-test", async function() {
@@ -36,7 +42,7 @@ describe("static-screens-test", () => {
         await this.browser.url('/hw/store/Contacts');
         await this.browser.$('.container').scrollIntoView();
         const button = await this.browser.$('button.Application-Toggler');
-        await button.waitForClickable();
+        await button.waitForClickable({timeout:2000});
         await button.click();
         await(500);
         await this.browser.$('.container').scrollIntoView();
@@ -44,29 +50,58 @@ describe("static-screens-test", () => {
         await this.browser.assertView('contacts-mini-click', '#root', {
             ignoreElements: ['.nav-link:last-child']
         });
+
+        const link = await this.browser.$('.nav-link:last-child');
+        await link.waitForClickable({timeout:2000});
+        await link.click();
+        const closeMenu = await this.browser.$('.collapse.navbar-collapse');
+        const isEx = closeMenu.isExisting();
+        assert.ok(isEx, "Гамбургер закрыт")
     });
-  
+
+    it("details", async function() {
+        await this.browser.setWindowSize(1300, 1024);
+        await this.browser.url('/hw/store/Catalog');
+        const link =  this.browser.$(".ProductItem-DetailsLink");
+        await link.waitForClickable({timeout: 2000});
+        await link.click();
+        await wait(2000);
+        await this.browser.$('.ProductDetails').scrollIntoView();
+        await this.browser.assertView('detalis', '.ProductDetails', {
+            ignoreElements: ['.ProductDetails-Name', 
+            '.ProductDetails-Description', 
+            '.ProductDetails-Price fs-3',
+            '.ProductDetails-Color',
+            '.ProductDetails-Material'
+            ],
+            compositeImage: true
+        });
+    })
 });
 
 const wait = (time) => new Promise(res => setTimeout(res, time));
 describe('Общие тесты', () => {
     it('Корзина-test', async function() {
-        await this.browser.setWindowSize(1300, 1024);
         await this.browser.url('/hw/store/Catalog');
         let details = await this.browser.$('.ProductItem-DetailsLink');
-        await details.waitForClickable();
+        await details.waitForClickable({timeout:2000});
         await details.click();
 
         let addCard = await this.browser.$('.ProductDetails-AddToCart');
-        await addCard.waitForExist();
-        await addCard.waitForClickable();
+        await addCard.waitForExist({timeout:2000});
+        await addCard.waitForClickable({timeout:2000});
 
         await addCard.click();
         await addCard.click();
         await addCard.click();
 
         let textAddItem = await this.browser.$('.text-success');
-        const isEx = await textAddItem.isExisting()
+        let isEx = await textAddItem.isExisting()
+        assert.ok(isEx, "Нет слов Item in cart befor adding")
+
+        this.browser.refresh();
+        textAddItem = await this.browser.$('.text-success');
+        isEx = await textAddItem.isExisting();
         assert.ok(isEx, "Нет слов Item in cart befor adding")
 
         let cartLink = await this.browser.$('.nav-link:last-child');
@@ -75,17 +110,17 @@ describe('Общие тесты', () => {
 
         await this.browser.url('/hw/store/Catalog');
         text = await this.browser.$('.ProductItem .text-success');
-        await text.waitForExist();
+        await text.waitForExist({timeout:2000});
         assert.equal(await text.getText(), "Item in cart")
 
         const nameElem = await this.browser.$('.ProductItem-Name');
-        await nameElem.waitForExist();
+        await nameElem.waitForExist({timeout:2000});
         const name = await nameElem.getText();
 
         await this.browser.url('/hw/store/Cart');
 
         const nameInTableElem = await this.browser.$('.Cart-Name');
-        await nameInTableElem.waitForExist();
+        await nameInTableElem.waitForExist({timeout:2000});
         const nameInTable = await nameInTableElem.getText();
 
         assert.equal(nameInTable, name);
@@ -102,12 +137,12 @@ describe('Общие тесты', () => {
         assert.equal(count1, "3");
 
         const buttonElem = await this.browser.$('.Cart-Clear');
-        await buttonElem.waitForClickable();
-        await buttonElem.click();
+        await buttonElem.waitForClickable({timeout:2000});
+        await buttonElem.click({timeout:2000});
 
         const emptyTextElem = await this.browser.$('.col a');
-        await emptyTextElem.waitForExist();
-        let emptyText = await emptyTextElem.getText();
+        await emptyTextElem.waitForExist({timeout:2000});
+        let emptyText = await emptyTextElem.getText({timeout:2000});
 
         assert.equal(emptyText, 'catalog');
 
@@ -123,12 +158,12 @@ describe('Общие тесты', () => {
 
         await addCard.click();
         const nameElem1 = await this.browser.$('h1');
-        await nameElem1.waitForExist();
-        const name1 = await nameElem1.getText();
+        await nameElem1.waitForExist({timeout:2000});
+        const name1 = await nameElem1.getText({timeout:2000});
 
         const priceElem1 = await this.browser.$('.ProductDetails-Price');
         await priceElem1.waitForExist({timeout: 2000});
-        let price1 = await priceElem1.getText();
+        let price1 = await priceElem1.getText({timeout:2000});
         price1 = +price1.slice(1)
         console.log(price1);
 
