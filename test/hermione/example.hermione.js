@@ -77,6 +77,18 @@ describe("static-screens-test", () => {
             compositeImage: true
         });
     })
+    it('cart-default', async function() {
+        await this.browser.url('/hw/store/Cart');
+        await this.browser.$('.col').scrollIntoView();
+        await this.browser.assertView('cart-default', '.col');
+    })
+    // it('category default', async function() {
+    //     await this.browser.url('/hw/store/catalog');
+    //     await this.browser.$('.row:last-child div').scrollIntoView();
+    //     await this.browser.assertView('category-default', '.row:last-child div', {
+    //         ignoreElements: ['.row:last-child div .ProductItem-Name', '.row:last-child div .ProductItem-Price']
+    //     });
+    // })
 });
 
 const wait = (time) => new Promise(res => setTimeout(res, time));
@@ -134,6 +146,7 @@ describe('Общие тесты', () => {
 
         const buttonElem = await this.browser.$('.Cart-Clear');
         await buttonElem.waitForClickable();
+        assert.equal(await buttonElem.getText(), 'Clear shopping cart');
         await buttonElem.click();
 
         const emptyTextElem = await this.browser.$('.col a');

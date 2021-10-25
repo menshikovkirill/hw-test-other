@@ -118,6 +118,9 @@ describe('Каталог', () => {
         expect(name).toBe(itemList[0].name);
         const price = container.querySelector('.ProductItem-Price').textContent;
         expect(price).toBe('$' + itemList[0].price);
+
+        const link = container.querySelector('.ProductItem-DetailsLink').getAttribute("href");
+        expect(link).toBe(`/hw/store/catalog/${itemList[0].id}`);
     })
     it('детализация', async ()  => {
         const exampleStore = new ExampleStore();
@@ -151,6 +154,9 @@ describe('Каталог', () => {
         expect(color).toBe('red');
         const material = container.querySelector('.ProductDetails-Material').textContent;
         expect(material).toBe('material');
+
+        const button = container.querySelector('.ProductDetails-AddToCart').textContent;
+        expect(button).toBe('Add to Cart');
     })
 
 });
