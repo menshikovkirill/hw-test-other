@@ -69,8 +69,7 @@ describe('Корзина', async () => {
         let text = await this.browser.$('.ProductItem').$('.text-success');
         await text.waitForExist();
         assert.equal(await text.getText(), "Item in cart")
-    })
-    it('в шапке рядом со ссылкой на корзину должно отображаться количество не повторяющихся товаров в ней', async function(){
+
         let cartLink = await this.browser.$('.nav-link:last-child');
         text = await cartLink.getText();
         assert.equal(text, "Cart (1)");
@@ -159,13 +158,11 @@ describe('Корзина', async () => {
 
         assert.equal((price1 + price2), totalPrice);
 
-    });
-    it("оформление заказа", async function() {
         await this.browser.url('/hw/store/catalog');
-        let details = await this.browser.$('.card-link');
+        details = await this.browser.$('.card-link');
         await details.waitForClickable({timeout: 2000});
         await details.click();
-        let addCard = await this.browser.$('.ProductDetails-AddToCart');
+        addCard = await this.browser.$('.ProductDetails-AddToCart');
         await addCard.waitForClickable({timeout: 2000});
 
         await addCard.click();
@@ -201,5 +198,6 @@ describe('Корзина', async () => {
         const welcom = await this.browser.$('.alert-heading');
         await welcom.waitForExist({timeout:2000});
         assert.equal(await welcom.getText(), 'Well done!');
+
     });
 });
