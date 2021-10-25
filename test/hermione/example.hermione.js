@@ -76,21 +76,19 @@ describe("static-screens-test", () => {
             ],
             compositeImage: true
         });
-
     })
-    
+
     it('cart-default', async function() {
         await this.browser.url('/hw/store/Cart');
         await this.browser.$('.col').scrollIntoView();
         await this.browser.assertView('cart-default', '.col');
     })
-    // it('category default', async function() {
-    //     await this.browser.url('/hw/store/catalog');
-    //     await this.browser.$('.row:last-child div').scrollIntoView();
-    //     await this.browser.assertView('category-default', '.row:last-child div', {
-    //         ignoreElements: ['.row:last-child div .ProductItem-Name', '.row:last-child div .ProductItem-Price']
-    //     });
-    // })
+    it('cart-default-mini', async function() {
+        await this.browser.setWindowSize(500, 1024);
+        await this.browser.url('/hw/store/Cart');
+        await this.browser.$('.col').scrollIntoView();
+        await this.browser.assertView('cart-default', '.col');
+    })
 });
 
 const wait = (time) => new Promise(res => setTimeout(res, time));
