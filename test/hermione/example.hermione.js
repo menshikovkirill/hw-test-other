@@ -35,11 +35,7 @@ describe("static-screens", async () => {
         await(500);
         await this.browser.$('.container').scrollIntoView();
         await(500);
-        await this.browser.assertView('contacts-mini-click', '#root', {
-            ignoreElements: [
-                '.nav-link:last-child'
-            ]
-        });
+        await this.browser.assertView('contacts-mini-click', '#root');
     });
   
 });
@@ -64,15 +60,26 @@ describe('Корзина', async () => {
         let textAddItem = await this.browser.$('.text-success');
         const isEx = await textAddItem.isExisting()
         assert.ok(isEx, "Нет слов Item in cart befor adding")
+<<<<<<< HEAD
 
         await this.browser.url('/hw/store/Catalog');
         let text = await this.browser.$('.ProductItem').$('.text-success');
         await text.waitForExist();
         assert.equal(await text.getText(), "Item in cart")
 
+=======
+    })
+    it('в шапке рядом со ссылкой на корзину должно отображаться количество не повторяющихся товаров в ней', async function(){
+>>>>>>> parent of aef6cb4... fix
         let cartLink = await this.browser.$('.nav-link:last-child');
         text = await cartLink.getText();
         assert.equal(text, "Cart (1)");
+    })
+    it('Item in cart в Catalog', async function() {
+        await this.browser.url('/hw/store/Catalog');
+        let text = await this.browser.$('.ProductItem').$('.text-success');
+        await text.waitForExist();
+        assert.equal(await text.getText(), "Item in cart")
     })
     it('данные при добавлении совпадают с корзиной', async function() {
         const nameElem = await this.browser.$('.ProductItem-Name');
@@ -91,13 +98,15 @@ describe('Корзина', async () => {
         const count = await countElem.getText();
 
         assert.equal(count, "3");
-
+    })
+    it('при перезагрузке корзина не падает', async function() {
         await this.browser.refresh();
         await wait(500);
         const countElem1 = await this.browser.$('.Cart-Count');
         const count1 = await countElem1.getText();
         assert.equal(count1, "3");
-
+    })
+    it('удаление корзины', async function() {
         const buttonElem = await this.browser.$('.Cart-Clear');
         await buttonElem.waitForClickable();
         await buttonElem.click();
