@@ -70,14 +70,13 @@ describe("static-screens-test", () => {
         await this.browser.assertView('detalis', '.ProductDetails', {
             ignoreElements: ['.ProductDetails-Name', 
             '.ProductDetails-Description', 
-            '.ProductDetails-Price fs-3',
+            '.ProductDetails-Price',
             '.ProductDetails-Color',
             '.ProductDetails-Material'
             ],
             compositeImage: true
         });
-    })
-    it('cart-default', async function() {
+
         await this.browser.url('/hw/store/Cart');
         await this.browser.$('.col').scrollIntoView();
         await this.browser.assertView('cart-default', '.col');
