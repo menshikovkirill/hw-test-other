@@ -1,6 +1,6 @@
 const { assert } = require('chai');
 
-describe("static-screens-test", async () => {
+describe("static-screens-test", () => {
     it('main-test', async function() {
         await this.browser.url('/hw/store/');
         await this.browser.assertView('main', '#root');
