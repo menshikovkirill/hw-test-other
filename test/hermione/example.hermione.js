@@ -70,13 +70,16 @@ describe("static-screens-test", () => {
         await this.browser.assertView('detalis', '.ProductDetails', {
             ignoreElements: ['.ProductDetails-Name', 
             '.ProductDetails-Description', 
-            '.ProductDetails-Price',
+            '.ProductDetails-Price fs-3',
             '.ProductDetails-Color',
             '.ProductDetails-Material'
             ],
             compositeImage: true
         });
 
+    })
+    
+    it('cart-default', async function() {
         await this.browser.url('/hw/store/Cart');
         await this.browser.$('.col').scrollIntoView();
         await this.browser.assertView('cart-default', '.col');
@@ -243,6 +246,5 @@ describe('Общие тесты', () => {
         const welcom = await this.browser.$('.alert-heading');
         await welcom.waitForExist({timeout:2000});
         assert.equal(await welcom.getText(), 'Well done!');
-
     })
 })
