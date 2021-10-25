@@ -82,14 +82,15 @@ describe("static-screens-test", () => {
 const wait = (time) => new Promise(res => setTimeout(res, time));
 describe('Общие тесты', () => {
     it('Корзина-test', async function() {
+        await this.browser.setWindowSize(1300, 1024);
         await this.browser.url('/hw/store/Catalog');
         let details = await this.browser.$('.ProductItem-DetailsLink');
-        await details.waitForClickable({timeout:2000});
+        await details.waitForClickable();
         await details.click();
 
         let addCard = await this.browser.$('.ProductDetails-AddToCart');
-        await addCard.waitForExist({timeout:2000});
-        await addCard.waitForClickable({timeout:2000});
+        await addCard.waitForExist();
+        await addCard.waitForClickable();
 
         await addCard.click();
         await addCard.click();
@@ -99,28 +100,23 @@ describe('Общие тесты', () => {
         let isEx = await textAddItem.isExisting()
         assert.ok(isEx, "Нет слов Item in cart befor adding")
 
-        this.browser.refresh();
-        textAddItem = await this.browser.$('.text-success');
-        isEx = await textAddItem.isExisting();
-        assert.ok(isEx, "Нет слов Item in cart befor adding")
-
         let cartLink = await this.browser.$('.nav-link:last-child');
         let text = await cartLink.getText();
         assert.equal(text, "Cart (1)");
 
         await this.browser.url('/hw/store/Catalog');
         text = await this.browser.$('.ProductItem .text-success');
-        await text.waitForExist({timeout:2000});
+        await text.waitForExist();
         assert.equal(await text.getText(), "Item in cart")
 
         const nameElem = await this.browser.$('.ProductItem-Name');
-        await nameElem.waitForExist({timeout:2000});
+        await nameElem.waitForExist();
         const name = await nameElem.getText();
 
         await this.browser.url('/hw/store/Cart');
 
         const nameInTableElem = await this.browser.$('.Cart-Name');
-        await nameInTableElem.waitForExist({timeout:2000});
+        await nameInTableElem.waitForExist();
         const nameInTable = await nameInTableElem.getText();
 
         assert.equal(nameInTable, name);
@@ -137,8 +133,8 @@ describe('Общие тесты', () => {
         assert.equal(count1, "3");
 
         const buttonElem = await this.browser.$('.Cart-Clear');
-        await buttonElem.waitForClickable({timeout:2000});
-        await buttonElem.click({timeout:2000});
+        await buttonElem.waitForClickable();
+        await buttonElem.click();
 
         const emptyTextElem = await this.browser.$('.col a');
         await emptyTextElem.waitForExist({timeout:2000});

@@ -80,7 +80,7 @@ describe('Общие требования', () => {
 });
 
 describe('Каталог', () => {
-    it.skip('в каталоге должны отображаться товары, список которых приходит с сервера', async ()  => {
+    it('в каталоге должны отображаться товары, список которых приходит с сервера', async ()  => {
         const exampleStore = new ExampleStore();
         const itemList = exampleStore.getAllProducts();
 
