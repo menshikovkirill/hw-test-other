@@ -82,12 +82,11 @@ describe("static-screens-test", () => {
         await this.browser.url('/hw/store/Cart');
         await this.browser.$('.col').scrollIntoView();
         await this.browser.assertView('cart-default', '.col');
-    })
-    it('cart-default-mini', async function() {
+
         await this.browser.setWindowSize(500, 1024);
         await this.browser.url('/hw/store/Cart');
         await this.browser.$('.col').scrollIntoView();
-        await this.browser.assertView('cart-default', '.col');
+        await this.browser.assertView('cart-default-1', '.col');
     })
 });
 
