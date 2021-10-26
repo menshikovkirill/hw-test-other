@@ -86,6 +86,17 @@ describe("static-screens-test", () => {
             compositeImage: true
         });
     })
+    
+    it('cart-default', async function() {
+        await this.browser.url('/hw/store/Cart');
+        await this.browser.$('.col').scrollIntoView();
+        await this.browser.assertView('cart-default', '.col');
+
+        await this.browser.setWindowSize(500, 1024);
+        await this.browser.url('/hw/store/Cart');
+        await this.browser.$('.col').scrollIntoView();
+        await this.browser.assertView('cart-default-1', '.col');
+    })
 });
 
 const wait = (time) => new Promise(res => setTimeout(res, time));
