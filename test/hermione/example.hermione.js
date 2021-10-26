@@ -108,8 +108,8 @@ describe('Общие тесты', () => {
         await addCard.click();
 
         let textAddItem = await this.browser.$('.text-success');
-        let isEx = await textAddItem.isExisting()
-        assert.ok(isEx, "Нет слов Item in cart befor adding")
+        let isEx = await textAddItem.isExisting();
+        assert.ok(isEx, "Нет слов Item in cart befor adding");
 
         let cartLink = await this.browser.$('.nav-link:last-child');
         let text = await cartLink.getText();
@@ -212,6 +212,10 @@ describe('Общие тесты', () => {
 
         await addCard.click();
         await this.browser.url('/hw/store/cart');
+
+        await this.browser.assertView('cart-not-def', '.col', {
+            ignoreElements: ['.Cart-Name', '.Cart-Price', '.Cart-Total', '.Cart-OrderPrice']
+        })
 
         let inputNameElem = await this.browser.$('input');
         await inputNameElem.waitForExist({timeout:2000});
