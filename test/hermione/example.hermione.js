@@ -57,6 +57,15 @@ describe("static-screens-test", () => {
         const closeMenu = await this.browser.$('.collapse.navbar-collapse');
         const isEx = closeMenu.isExisting();
         assert.ok(isEx, "Гамбургер закрыт")
+
+        await this.browser.url('/hw/store/Cart');
+        await this.browser.$('.col').scrollIntoView();
+        await this.browser.assertView('cart-default', '.col');
+
+        await this.browser.setWindowSize(500, 1024);
+        await this.browser.url('/hw/store/Cart');
+        await this.browser.$('.col').scrollIntoView();
+        await this.browser.assertView('cart-default-1', '.col');
     });
 
     it("details", async function() {
@@ -77,7 +86,7 @@ describe("static-screens-test", () => {
             compositeImage: true
         });
     })
-
+    
     it('cart-default', async function() {
         await this.browser.url('/hw/store/Cart');
         await this.browser.$('.col').scrollIntoView();
@@ -108,8 +117,8 @@ describe('Общие тесты', () => {
         await addCard.click();
 
         let textAddItem = await this.browser.$('.text-success');
-        let isEx = await textAddItem.isExisting()
-        assert.ok(isEx, "Нет слов Item in cart befor adding")
+        let isEx = await textAddItem.isExisting();
+        assert.ok(isEx, "Нет слов Item in cart befor adding");
 
         let cartLink = await this.browser.$('.nav-link:last-child');
         let text = await cartLink.getText();

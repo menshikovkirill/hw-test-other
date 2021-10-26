@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 var data = {"skips":[],"config":{"defaultView":"all","baseHost":"","scaleImages":false,"errorPatterns":[],"metaInfoBaseUrls":{},"customScripts":[],"yandexMetrika":{"counterNumber":null},"pluginsEnabled":false,"plugins":[]},"apiValues":{"extraItems":{},"metaInfoExtenders":{},"imagesSaver":{"saveImg":"async (srcCurrPath, {destPath, reportDir}) => {\n        await utils.copyFileAsync(srcCurrPath, destPath, reportDir);\n\n        return destPath;\n    }"},"reportsSaver":null},"date":"Tue Oct 26 2021 17:25:23 GMT+0300 (Москва, стандартное время)"};
+=======
+var data = {"skips":[],"config":{"defaultView":"all","baseHost":"","scaleImages":false,"errorPatterns":[],"metaInfoBaseUrls":{},"customScripts":[],"yandexMetrika":{"counterNumber":null},"pluginsEnabled":false,"plugins":[]},"apiValues":{"extraItems":{},"metaInfoExtenders":{},"imagesSaver":{"saveImg":"async (srcCurrPath, {destPath, reportDir}) => {\n        await utils.copyFileAsync(srcCurrPath, destPath, reportDir);\n\n        return destPath;\n    }"},"reportsSaver":null},"date":"Tue Oct 26 2021 17:00:30 GMT+0300 (Москва, стандартное время)"};
+>>>>>>> c4464d69726b5a1d803af5d2bfd91ce81ab5f98c
 try { module.exports = data; } catch(e) {}
