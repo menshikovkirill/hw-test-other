@@ -57,7 +57,9 @@ describe("static-screens-test", () => {
         const closeMenu = await this.browser.$('.collapse.navbar-collapse');
         const isEx = closeMenu.isExisting();
         assert.ok(isEx, "Гамбургер закрыт")
+    });
 
+    it('cart', async function() {
         await this.browser.url('/hw/store/Cart');
         await this.browser.$('.col').scrollIntoView();
         await this.browser.assertView('cart-default', '.col');
@@ -66,7 +68,7 @@ describe("static-screens-test", () => {
         await this.browser.url('/hw/store/Cart');
         await this.browser.$('.col').scrollIntoView();
         await this.browser.assertView('cart-default-1', '.col');
-    });
+    })
 
     it("details", async function() {
         await this.browser.setWindowSize(1300, 1024);
