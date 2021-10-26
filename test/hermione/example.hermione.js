@@ -213,10 +213,6 @@ describe('Общие тесты', () => {
         await addCard.click();
         await this.browser.url('/hw/store/cart');
 
-        await this.browser.assertView('cart-not-def', '.col', {
-            ignoreElements: ['.Cart-Name', '.Cart-Price', '.Cart-Total', '.Cart-OrderPrice']
-        })
-
         let inputNameElem = await this.browser.$('input');
         await inputNameElem.waitForExist({timeout:2000});
         await inputNameElem.click();
